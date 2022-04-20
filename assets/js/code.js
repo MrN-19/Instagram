@@ -1,0 +1,221 @@
+function LikePost(code) {
+    let csrf = document.querySelector("input[name=csrfmiddlewaretoken]").value;
+    $.ajax({
+        url: "/like-post",
+        type: "POST",
+        data: {
+            code: code,
+            csrfmiddlewaretoken: csrf
+        },
+        success: function (res) {
+            iziToast.success({
+                message: res.text,
+                position: 'bottomRight',
+                timeout: 2000,
+            });
+            if (res.like == true) {
+                document.getElementById("like-heart-color" + code).style.fill = "red";
+            }
+            else {
+                document.getElementById("like-heart-color" + code).style.fill = "black";
+            }
+        },
+        error: function (res) {
+            let data = JSON.parse(res.responseText);
+            iziToast.error({
+                message: data.text,
+                position: 'bottomRight',
+                timeout: 3000,
+            });
+        }
+    })
+}
+
+function SavePost(code) {
+    let csrf = document.querySelector("input[name=csrfmiddlewaretoken]").value;
+    $.ajax({
+        url: "/save-post",
+        type: "POST",
+        data: {
+            code: code,
+            csrfmiddlewaretoken: csrf
+        },
+        success: function (res) {
+            iziToast.success({
+                message: res.text,
+                position: 'bottomRight',
+                timeout: 2000,
+            });
+            let save_element = document.getElementById("save-post-color" + code);
+            if (res.saved == true) {
+                save_element.style.fill = "red";
+            }
+            else {
+                save_element.style.fill = "black";
+            }
+        },
+        error: function (res) {
+            let data = JSON.parse(res.responseText);
+            iziToast.error({
+                message: data.text,
+                position: 'bottomRight',
+                timeout: 3000,
+            });
+        }
+    })
+}
+
+function StartWaiting() {
+    let img_waiting = document.getElementById("img-waiting");
+    img_waiting.style.display = "inline-block";
+    img_waiting.src = "/assets/img/dark-loader.gif";
+
+}
+function StopWaiting() {
+    let img_waiting = document.getElementById("img-waiting");
+    img_waiting.style.display = "none";
+}
+
+function GetFollowersToSharePost(postid) {
+    StartWaiting();
+    $.ajax({
+        url: "/share-post-user",
+        type: "GET",
+        success: function (res) {
+            let usernames = res.data;
+            for (let i = 0; i < usernames.length; i++) {
+                let li_username = document.createElement("li");
+                li_username.id = "each_users_" + i;
+
+                let img_user_picture = document.createElement("img");
+                img_user_picture.id = "each_img" + i;
+                img_user_picture.style.borderRadius = "50px";
+                img_user_picture.style.width = "40px";
+                img_user_picture.style.height = "40px";
+                img_user_picture.style.marginRight = "12px";
+
+                let check_to_send = document.createElement("input");
+                check_to_send.value = usernames[i];
+                check_to_send.id = "user_" + i;
+                check_to_send.className = "user";
+                check_to_send.type = "checkbox";
+                check_to_send.style.margin = "10px 12px";
+
+                document.querySelector("button.btn-send-post-other-directs").id = postid;
+
+                let ul_list = document.getElementById("ul_list");
+                $.ajax({
+                    url: "/usernamepicture/" + usernames[i],
+                    type: "GET",
+                    success: function (res) {
+                        img_user_picture.src = res.picture;
+                        li_username.innerHTML = usernames[i];
+                        li_username.append(img_user_picture);
+                        li_username.append(check_to_send);
+
+                        ul_list.appendChild(li_username);
+                        console.log(ul_list);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                })
+            }
+            StopWaiting();
+        },
+        error: function (res) {
+            let data = JSON.parse(res.responseText);
+            iziToast.error({
+                message: data.text,
+                position: 'bottomRight',
+                timeout: 3000,
+            });
+        }
+    });
+}
+
+function ShowComments(code) {
+
+}
+
+function SharePost() {
+    let users = document.querySelectorAll("input[type=checkbox].user");
+    let postid = document.querySelector("button.btn-send-post-other-directs").id;
+    let usernames = [];
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].checked == true) {
+            usernames.push(
+                users[i].value
+            );
+        }
+
+    }
+    if (usernames.length > 0) {
+        $.ajax({
+            url: "/direct/share",
+            type: "POST",
+            data: {
+                users: usernames,
+                csrfmiddlewaretoken: document.querySelector("input[name=csrfmiddlewaretoken]").value,
+                postid: postid,
+            },
+            success: function (res) {
+                iziToast.success({
+                    message: res.text,
+                    position: 'bottomRight',
+                    timeout: 3000,
+                });
+            },
+            error: function (res) {
+                iziToast.error({
+                    message: res.text,
+                    position: 'bottomRight',
+                    timeout: 3000,
+                });
+            }
+        });
+    }
+    else{
+        iziToast.error({
+            message: "لطفا کاربران را انتخاب کنید",
+            position: 'bottomRight',
+            timeout: 3000,
+        });
+    }
+}
+
+function SetComment(postid){
+    let comment_text = document.getElementById("comment_text");
+    let header = document.getElementById("header");
+    if(comment_text.value !== "" && comment_text.value !== undefined && comment_text.value != null)
+    {
+        $.ajax({
+            url : "set-comment/" + comment_text.value +"/" + postid + "/" + "0",
+            type : "GET",
+            success : function(res)
+            {
+                iziToast.success({
+                    message: res.text,
+                    position: 'bottomRight',
+                    timeout: 3000,
+                });
+            },
+            error : function(res)
+            {
+                iziToast.error({
+                    message: res.text,
+                    position: 'bottomRight',
+                    timeout: 3000,
+                });
+            }
+        });
+    }
+    else
+    {
+        iziToast.error({
+            message: "لطفا متن نظر را وارد کنید",
+            position: 'bottomRight',
+            timeout: 3000,
+        });
+    }
+}
