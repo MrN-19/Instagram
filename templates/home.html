@@ -253,7 +253,7 @@
                                     </svg>
                                 </span>
                                 <!-- Comment -->
-                                <span class="text-decoration-none text-dark mx-1 cursor-pointer" onclick="ShowComments('{{i.code}}')">
+                                <span class="text-decoration-none text-dark mx-1 cursor-pointer" onclick="ShowComments('{{i.code}}')" data-bs-toggle="modal" data-bs-target="#comment_modal">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                         class="bi bi-chat-dots" viewBox="0 0 16 16">
                                         <path
@@ -290,7 +290,6 @@
                             <textarea name="" id="comment_text" cols="50" class="form-control" placeholder="ثبت نظر">
 
                             </textarea>
-                            
                         </div>
                         <div class="col-2 text-center">
                             <button class="btn btn-sm btn-primary" onclick="SetComment('{{i.code}}')">
@@ -344,6 +343,7 @@
     </div>
 </div>
 
+<!-- Share Post Modal -->
 <div class="modal fade" id="send_to_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -371,6 +371,36 @@
         </div>
     </div>
 </div>
-<!-- End Modal -->
+<!-- End Share Post Modal -->
 
+
+<!-- Comment Modal -->
+<div class="modal fade" id="comment_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title-comment" id="exampleModalLabel">
+                    
+                </h5>
+            </div>
+            <div class="modal-body">
+                <textarea name="" id="comment_text" cols="50" class="form-control" placeholder="ثبت نظر">
+
+                </textarea>
+                <ul class="comment-list">
+
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    بستن
+                </button>
+                <button class="btn btn-success btn-send-post-other-directs" id="" onclick="">
+                    ارسال
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Comment Modal -->
 {% endblock %}

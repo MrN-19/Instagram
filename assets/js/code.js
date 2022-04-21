@@ -165,7 +165,11 @@ function ShowComments(code) {
                     type : "GET",
                     success : function(res)
                     {
+<<<<<<< HEAD
                         
+=======
+                        console.log(res);
+>>>>>>> post
                     },
                     error : function(res)
                     {
