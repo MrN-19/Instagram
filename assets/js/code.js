@@ -135,7 +135,58 @@ function GetFollowersToSharePost(postid) {
 }
 
 function ShowComments(code) {
+    $.ajax({
+        url : "comments/" + code,
+        type : "GET",
+        success : function(res)
+        {
+            let data = JSON.parse(res.data);
+            console.log(data[0].fields);
+            for(let i = 0; i < data.length;i++)
+            {
+                // Image
+                let image = document.createElement("img");
+                image.style.borderRadius = "50px";
+                image.style.width = "40px";
+                image.style.height = "40px";
+                image.style.margin = "10px";
+                // End Image
 
+                // li user name
+                let li_username = document.createElement("li");
+                // end li username
+
+                // p comment User Name
+                let comment = document.createElement("p");
+                // End p comment UserName
+                
+                $.ajax({
+                    url : "/user/" + data[i].fields.user,
+                    type : "GET",
+                    success : function(res)
+                    {
+                        console.log(res);
+                    },
+                    error : function(res)
+                    {
+                        iziToast.error({
+                            message: res.text,
+                            position: 'bottomRight',
+                            timeout: 3000,
+                        });
+                    }
+                })
+            }
+        },
+        error : function(res)
+        {
+            iziToast.error({
+                message: res.text,
+                position: 'bottomRight',
+                timeout: 3000,
+            });
+        },
+    });
 }
 
 function SharePost() {

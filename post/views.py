@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from account.models import FollowersFollowing
 from django.core.serializers import serialize
 from django.contrib.auth.models import User
+
 def check_user_can_see_post(post,request):
     if post.user.accountsetting.is_private_page == False or post.user.followeduser.filter(following = request.user,followe = post.user).exists():
         return True
@@ -133,6 +134,29 @@ def get_picture_by_username(request,username):
 
 @login_required(login_url="account:login")
 @require_GET
+def get_user_by_id(request,id):
+    try:
+        user = User.objects.filter(id = id).first()
+        if user:
+            return JsonResponse({
+                "status" : True,"message" : "Success 200","username" : user.username,
+                "picture" : user.profile.profile_image.url,
+            })
+        return JsonResponse({
+            "status" : False,
+            "message" : "Not Found 404",
+            "text" : "خطا در انجام عملیات"
+        },status = 404)
+    except Exception as e:
+        print(e)
+        return JsonResponse({
+            "status" : False,
+            "message" : "Bad Request 403",
+            "text" : "خطا در انجام عملیات"
+        },status = 403) 
+
+@login_required(login_url="account:login")
+@require_GET
 def set_comment(request,text,postid,header):
     try:
         post = Post.objects.filter(code = postid).first()
@@ -171,3 +195,25 @@ def set_comment(request,text,postid,header):
             "message" : "Bad Request 403",
             "text" : "خطا در انجام عملیات"
         },status = 403)     
+
+@require_GET
+@login_required(login_url="account:login")
+def get_comments_by_post_id(request,postid):
+    try:
+        post = Post.objects.filter(code = postid).first()
+        if post:
+            comments = PostComment.objects.filter(post = post)
+            comments = serialize("json",comments)
+            data = {
+                "status" : True,"message" : "Success 200", "data" : comments
+            }
+            return JsonResponse(data,status = 200)
+        return JsonResponse({
+            "status" : False,"message" : "404 Not Found","text" : "خطا در انجام عملیات"
+        },status = 404)
+    except Exception as e:
+        print(e)
+
+        return JsonResponse({
+            "status" : False,"message" : "403 Bad Request","text" : "خطا در انجام عملیات"
+        },status = 403)
