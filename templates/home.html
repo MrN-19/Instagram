@@ -13,7 +13,8 @@
                 {% if profile.profile_image %}
                 <img src="{{profile.profile_image.url}}" alt="user porifle image" class="profile-image-post img-fluid">
                 {% else %}
-                <img src="{% static 'img/unknownuserimage.png' %}" alt="user porifle image" class="profile-image-post img-fluid">
+                <img src="{% static 'img/unknownuserimage.png' %}" alt="user porifle image"
+                    class="profile-image-post img-fluid">
                 {% endif %}
             </div>
             <div class="col-9 text-end pt-1">
@@ -30,7 +31,8 @@
             <div class="col-12 my-2">
                 <div class="row">
                     <div class="col-3">
-                        <img src="img/unknownuserimage.png" alt="user porifle image" class="profile-image-post img-fluid">
+                        <img src="img/unknownuserimage.png" alt="user porifle image"
+                            class="profile-image-post img-fluid">
                     </div>
                     <div class="col-9 text-end pt-1">
                         <a href="" class="text-decoration-none text-dark text-nowrap">
@@ -42,7 +44,8 @@
             <div class="col-12 my-2">
                 <div class="row">
                     <div class="col-3">
-                        <img src="img/unknownuserimage.png" alt="user porifle image" class="profile-image-post img-fluid">
+                        <img src="img/unknownuserimage.png" alt="user porifle image"
+                            class="profile-image-post img-fluid">
                     </div>
                     <div class="col-9 text-end pt-1">
                         <a href="" class="text-decoration-none text-dark text-nowrap">
@@ -54,7 +57,8 @@
             <div class="col-12 my-2">
                 <div class="row">
                     <div class="col-3">
-                        <img src="img/unknownuserimage.png" alt="user porifle image" class="profile-image-post img-fluid">
+                        <img src="img/unknownuserimage.png" alt="user porifle image"
+                            class="profile-image-post img-fluid">
                     </div>
                     <div class="col-9 text-end pt-1">
                         <a href="" class="text-decoration-none text-dark text-nowrap">
@@ -66,7 +70,8 @@
             <div class="col-12 my-2">
                 <div class="row">
                     <div class="col-3">
-                        <img src="img/unknownuserimage.png" alt="user porifle image" class="profile-image-post img-fluid">
+                        <img src="img/unknownuserimage.png" alt="user porifle image"
+                            class="profile-image-post img-fluid">
                     </div>
                     <div class="col-9 text-end pt-1">
                         <a href="" class="text-decoration-none text-dark text-nowrap">
@@ -199,13 +204,15 @@
                 <div class="card-header" id="{{i.code}}">
                     <div class="row">
                         <div class="col-6 text-end py-1">
-                            <a href="#" class="text-dark text-decoration-none">
+                            <span class="text-dark text-decoration-none cursor-pointer"
+                                onclick="PostDetail('{{i.code}}')" data-bs-toggle="modal"
+                                data-bs-target="#post_detail_modal">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-three-dots" viewBox="0 0 16 16">
                                     <path
                                         d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
                                 </svg>
-                            </a>
+                            </span>
                         </div>
                         <div class="col-6 text-start">
                             <!-- Person Who Posts -->
@@ -214,7 +221,8 @@
                                     {{i.user.username}}
                                 </a>
                             </span>
-                            <img src="{{i.user.profile.profile_image.url}}" alt="unknow user image" class="profile-image-post">
+                            <img src="{{i.user.profile.profile_image.url}}" alt="unknow user image"
+                                class="profile-image-post">
                         </div>
                     </div>
                 </div>
@@ -224,17 +232,19 @@
                         <div class="col-6 text-end">
                             <!-- Save -->
                             {% if request.user|check_save:i %}
-                            <span id="save-post" onclick="SavePost('{{i.code}}')" class="text-decoration-none text-dark">
-                                <svg id="save-post-color{{i.code}}" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red"
-                                    class="bi bi-bookmark" viewBox="0 0 16 16">
+                            <span id="save-post" onclick="SavePost('{{i.code}}')"
+                                class="text-decoration-none text-dark">
+                                <svg id="save-post-color{{i.code}}" xmlns="http://www.w3.org/2000/svg" width="20"
+                                    height="20" fill="red" class="bi bi-bookmark" viewBox="0 0 16 16">
                                     <path
                                         d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
                                 </svg>
                             </span>
                             {% else %}
-                            <span id="save-post" onclick="SavePost('{{i.code}}')" class="text-decoration-none text-dark">
-                                <svg id="save-post-color{{i.code}}" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black"
-                                    class="bi bi-bookmark" viewBox="0 0 16 16">
+                            <span id="save-post" onclick="SavePost('{{i.code}}')"
+                                class="text-decoration-none text-dark">
+                                <svg id="save-post-color{{i.code}}" xmlns="http://www.w3.org/2000/svg" width="20"
+                                    height="20" fill="black" class="bi bi-bookmark" viewBox="0 0 16 16">
                                     <path
                                         d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
                                 </svg>
@@ -243,9 +253,11 @@
                         </div>
                         <div class="col-6 text-start">
                             <div class="post-options">
-                                
+
                                 <!-- Share -->
-                                <span id="share-post-direct" onclick="GetFollowersToSharePost('{{i.code}}')" class="text-decoration-none text-dark mx-1 cursor-pointer" data-bs-toggle="modal" data-bs-target="#send_to_modal">
+                                <span id="share-post-direct" onclick="GetFollowersToSharePost('{{i.code}}')"
+                                    class="text-decoration-none text-dark mx-1 cursor-pointer" data-bs-toggle="modal"
+                                    data-bs-target="#send_to_modal">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                         class="bi bi-send" viewBox="0 0 16 16">
                                         <path
@@ -253,7 +265,9 @@
                                     </svg>
                                 </span>
                                 <!-- Comment -->
-                                <span class="text-decoration-none text-dark mx-1 cursor-pointer" onclick="ShowComments('{{i.code}}')" data-bs-toggle="modal" data-bs-target="#comment_modal">
+                                <span class="text-decoration-none text-dark mx-1 cursor-pointer"
+                                    onclick="ShowComments('{{i.code}}')" data-bs-toggle="modal"
+                                    data-bs-target="#comment_modal">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                         class="bi bi-chat-dots" viewBox="0 0 16 16">
                                         <path
@@ -264,37 +278,27 @@
                                 </span>
                                 <!-- Like -->
                                 {% if request.user|check_like:i %}
-                                <span id="like-post" onclick="LikePost('{{i.code}}')" class="text-decoration-none text-dark cursor-pointer like-post">
-                                    
-                                    <svg id="like-heart-color{{i.code}}" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red"
-                                        class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                <span id="like-post" onclick="LikePost('{{i.code}}')"
+                                    class="text-decoration-none text-dark cursor-pointer like-post">
+
+                                    <svg id="like-heart-color{{i.code}}" xmlns="http://www.w3.org/2000/svg" width="20"
+                                        height="20" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
                                             d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
                                     </svg>
                                 </span>
                                 {% else %}
-                                <span id="like-post" onclick="LikePost('{{i.code}}')" class="text-decoration-none text-dark cursor-pointer like-post">
-                                    
-                                    <svg id="like-heart-color{{i.code}}" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black"
-                                        class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                <span id="like-post" onclick="LikePost('{{i.code}}')"
+                                    class="text-decoration-none text-dark cursor-pointer like-post">
+
+                                    <svg id="like-heart-color{{i.code}}" xmlns="http://www.w3.org/2000/svg" width="20"
+                                        height="20" fill="black" class="bi bi-heart-fill" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
                                             d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
                                     </svg>
                                 </span>
                                 {% endif %}
                             </div>
-                        </div>
-                    </div>
-                    <div class="row my-3">
-                        <div class="col-10">
-                            <textarea name="" id="comment_text" cols="50" class="form-control" placeholder="ثبت نظر">
-
-                            </textarea>
-                        </div>
-                        <div class="col-2 text-center">
-                            <button class="btn btn-sm btn-primary" onclick="SetComment('{{i.code}}')">
-                                ثبت نظر
-                            </button>
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -314,9 +318,12 @@
         <div class="row border rounded mt-3">
             <div class="col-12 text-center">
                 {% if profile.profile_image %}
-                <img src="{{profile.profile_image.url}}" alt="Profile Image" class="img-fluid profile-image-post m-3" style="width:55px !important;height:55px !important;"><br/>
+                <img src="{{profile.profile_image.url}}" alt="Profile Image" class="img-fluid profile-image-post m-3"
+                    style="width:55px !important;height:55px !important;"><br />
                 {% else %}
-                <img src="{% static 'img/unknownuserimage.png' %}" alt="Profile Image" class="img-fluid profile-image-post m-3" style="width:55px !important;height:55px !important;"><br/>
+                <img src="{% static 'img/unknownuserimage.png' %}" alt="Profile Image"
+                    class="img-fluid profile-image-post m-3"
+                    style="width:55px !important;height:55px !important;"><br />
                 {% endif %}
                 <h5>
                     {{request.user.username}}
@@ -356,7 +363,7 @@
                 <div class="followers-list">
                     <img src="" alt="" id="img-waiting" style="display: none; width: 55px; height: 55px;">
                     <ul id="ul_list">
-                        
+
                     </ul>
                 </div>
             </div>
@@ -372,7 +379,7 @@
     </div>
 </div>
 <!-- End Share Post Modal -->
-
+<input type="hidden" id="session_once_state" value="{{request.session.once}}">
 
 <!-- Comment Modal -->
 <div class="modal fade" id="comment_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -380,11 +387,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title-comment" id="exampleModalLabel">
-                    نظرات پست 
+                    نظرات پست
                 </h5>
             </div>
             <div class="modal-body">
-                <textarea name="" id="comment_text" cols="50" class="form-control" placeholder="ثبت نظر">
+                <input type="hidden" name="" id="header_comment" value="">
+                <input type="hidden" name="" id="postid_comment" value="">
+
+                <textarea name="" id="comment_text" cols="50" class="form-control" placeholder="نظر خود را وارد کنید">
 
                 </textarea>
                 <ul class="comment-list">
@@ -403,4 +413,43 @@
     </div>
 </div>
 <!-- End Comment Modal -->
+
+<!-- Post Detail Modal -->
+<div class="modal fade" id="post_detail_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="post_detail_text">
+
+                </h5>
+            </div>
+            <div class="modal-body text-center">
+                <input type="hidden" id="post_detail_post_code" value="">
+                <span class="cursor-pointer text-danger fw-bold" onclick="UnFollowByPost()">
+                    آنفالو
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-hand-thumbs-down" viewBox="0 0 16 16">
+                        <path
+                            d="M8.864 15.674c-.956.24-1.843-.484-1.908-1.42-.072-1.05-.23-2.015-.428-2.59-.125-.36-.479-1.012-1.04-1.638-.557-.624-1.282-1.179-2.131-1.41C2.685 8.432 2 7.85 2 7V3c0-.845.682-1.464 1.448-1.546 1.07-.113 1.564-.415 2.068-.723l.048-.029c.272-.166.578-.349.97-.484C6.931.08 7.395 0 8 0h3.5c.937 0 1.599.478 1.934 1.064.164.287.254.607.254.913 0 .152-.023.312-.077.464.201.262.38.577.488.9.11.33.172.762.004 1.15.069.13.12.268.159.403.077.27.113.567.113.856 0 .289-.036.586-.113.856-.035.12-.08.244-.138.363.394.571.418 1.2.234 1.733-.206.592-.682 1.1-1.2 1.272-.847.283-1.803.276-2.516.211a9.877 9.877 0 0 1-.443-.05 9.364 9.364 0 0 1-.062 4.51c-.138.508-.55.848-1.012.964l-.261.065zM11.5 1H8c-.51 0-.863.068-1.14.163-.281.097-.506.229-.776.393l-.04.025c-.555.338-1.198.73-2.49.868-.333.035-.554.29-.554.55V7c0 .255.226.543.62.65 1.095.3 1.977.997 2.614 1.709.635.71 1.064 1.475 1.238 1.977.243.7.407 1.768.482 2.85.025.362.36.595.667.518l.262-.065c.16-.04.258-.144.288-.255a8.34 8.34 0 0 0-.145-4.726.5.5 0 0 1 .595-.643h.003l.014.004.058.013a8.912 8.912 0 0 0 1.036.157c.663.06 1.457.054 2.11-.163.175-.059.45-.301.57-.651.107-.308.087-.67-.266-1.021L12.793 7l.353-.354c.043-.042.105-.14.154-.315.048-.167.075-.37.075-.581 0-.211-.027-.414-.075-.581-.05-.174-.111-.273-.154-.315l-.353-.354.353-.354c.047-.047.109-.176.005-.488a2.224 2.224 0 0 0-.505-.804l-.353-.354.353-.354c.006-.005.041-.05.041-.17a.866.866 0 0 0-.121-.415C12.4 1.272 12.063 1 11.5 1z" />
+                    </svg>
+                </span>
+                <br />
+                <br />
+                <span class="text-danger fw-bold cursor-pointer">
+                    بلاک
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-angry" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683zm6.991-8.38a.5.5 0 1 1 .448.894l-1.009.504c.176.27.285.64.285 1.049 0 .828-.448 1.5-1 1.5s-1-.672-1-1.5c0-.247.04-.48.11-.686a.502.502 0 0 1 .166-.761l2-1zm-6.552 0a.5.5 0 0 0-.448.894l1.009.504A1.94 1.94 0 0 0 5 6.5C5 7.328 5.448 8 6 8s1-.672 1-1.5c0-.247-.04-.48-.11-.686a.502.502 0 0 0-.166-.761l-2-1z"/>
+                      </svg>
+                </span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    بستن
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Post Detail Modal -->
 {% endblock %}

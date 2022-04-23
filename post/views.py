@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from account.models import FollowersFollowing
 from django.core.serializers import serialize
 from django.contrib.auth.models import User
+import datetime as dt
 
 def check_user_can_see_post(post,request):
     if post.user.accountsetting.is_private_page == False or post.user.followeduser.filter(following = request.user,followe = post.user).exists():
@@ -200,6 +201,7 @@ def set_comment(request,text,postid,header):
 @login_required(login_url="account:login")
 def get_comments_by_post_id(request,postid):
     try:
+        request.session["once"] = True
         post = Post.objects.filter(code = postid).first()
         if post:
             comments = PostComment.objects.filter(post = post)
@@ -212,8 +214,6 @@ def get_comments_by_post_id(request,postid):
             "status" : False,"message" : "404 Not Found","text" : "خطا در انجام عملیات"
         },status = 404)
     except Exception as e:
-        print(e)
-
         return JsonResponse({
             "status" : False,"message" : "403 Bad Request","text" : "خطا در انجام عملیات"
         },status = 403)

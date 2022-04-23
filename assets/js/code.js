@@ -135,15 +135,16 @@ function GetFollowersToSharePost(postid) {
 }
 
 function ShowComments(code) {
+    // Not Complete Share and Comment
+    let once = document.getElementById("session_once_state").value;
+    document.getElementById("postid_comment").value = code;
     $.ajax({
-        url : "comments/" + code,
-        type : "GET",
-        success : function(res)
-        {
+        url: "comments/" + code,
+        type: "GET",
+        success: function (res) {
             let data = JSON.parse(res.data);
             console.log(data[0].fields);
-            for(let i = 0; i < data.length;i++)
-            {
+            for (let i = 0; i < data.length; i++) {
                 // Image
                 let image = document.createElement("img");
                 image.style.borderRadius = "50px";
@@ -154,21 +155,32 @@ function ShowComments(code) {
 
                 // li user name
                 let li_username = document.createElement("li");
+                li_username.className = "cursor-pointer";
+                li_username.id = "user-commented_" + data[i].fields.user;
+                li_username.addEventListener("click", function () {
+                    let id = this.id.substring(15);
+                    document.getElementById("header_comment").value = id;
+                });
                 // end li username
 
                 // p comment User Name
                 let comment = document.createElement("p");
+                comment.innerHTML = data[i].fields.comment;
                 // End p comment UserName
-                
+
+                let ul_list = document.querySelector("ul.comment-list");
                 $.ajax({
-                    url : "/user/" + data[i].fields.user,
-                    type : "GET",
-                    success : function(res)
-                    {
+                    url: "/user/" + data[i].fields.user,
+                    type: "GET",
+                    success: function (res) {
                         console.log(res);
+                        li_username.innerHTML = res.username;
+                        image.src = res.picture;
+                        li_username.append(image);
+                        li_username.append(comment);
+                        ul_list.appendChild(li_username);
                     },
-                    error : function(res)
-                    {
+                    error: function (res) {
                         iziToast.error({
                             message: res.text,
                             position: 'bottomRight',
@@ -178,8 +190,7 @@ function ShowComments(code) {
                 })
             }
         },
-        error : function(res)
-        {
+        error: function (res) {
             iziToast.error({
                 message: res.text,
                 position: 'bottomRight',
@@ -226,7 +237,7 @@ function SharePost() {
             }
         });
     }
-    else{
+    else {
         iziToast.error({
             message: "لطفا کاربران را انتخاب کنید",
             position: 'bottomRight',
@@ -235,24 +246,22 @@ function SharePost() {
     }
 }
 
-function SetComment(postid){
+function SetComment() {
     let comment_text = document.getElementById("comment_text");
-    let header = document.getElementById("header");
-    if(comment_text.value !== "" && comment_text.value !== undefined && comment_text.value != null)
-    {
+    let header = document.getElementById("header_comment");
+    let postid = document.getElementById("postid_comment").value;
+    if (comment_text.value !== "" && comment_text.value !== undefined && comment_text.value != null) {
         $.ajax({
-            url : "set-comment/" + comment_text.value +"/" + postid + "/" + "0",
-            type : "GET",
-            success : function(res)
-            {
+            url: "set-comment/" + comment_text.value + "/" + postid + "/" + header,
+            type: "GET",
+            success: function (res) {
                 iziToast.success({
                     message: res.text,
                     position: 'bottomRight',
                     timeout: 3000,
                 });
             },
-            error : function(res)
-            {
+            error: function (res) {
                 iziToast.error({
                     message: res.text,
                     position: 'bottomRight',
@@ -261,12 +270,66 @@ function SetComment(postid){
             }
         });
     }
-    else
-    {
+    else {
         iziToast.error({
             message: "لطفا متن نظر را وارد کنید",
             position: 'bottomRight',
             timeout: 3000,
         });
     }
+}
+
+function PostDetail(code){
+    let post_code_post_detail = document.getElementById("post_detail_post_code");
+    post_code_post_detail.value = code;
+}
+
+function UnFollowByPost(){
+    let post_code_post_detail = document.getElementById("post_detail_post_code");
+    alert(post_code_post_detail.value);
+    $.ajax({
+        url : "/request-action?code=" + post_code_post_detail.value + "&type=unfollow",
+        type : "GET",
+        success : function(res)
+        {
+            iziToast.success({
+                message: res.text,
+                position: 'bottomRight',
+                timeout: 3000,
+            });
+        },
+        error : function(res){
+            iziToast.success({
+                message: res.text,
+                position: 'bottomRight',
+                timeout: 3000,
+            });
+        },
+    });
+}
+function FollowByPost()
+{
+    let post_code_post_detail = document.getElementById("post_detail_post_code");
+    $.ajax({
+        url : "/request-action?code=" + post_code_post_detail.code + "&type=follow",
+        type : "GET",
+        success : function(res)
+        {
+            iziToast.success({
+                message: res.text,
+                position: 'bottomRight',
+                timeout: 3000,
+            });
+        },
+        error : function(res){
+            iziToast.success({
+                message: res.text,
+                position: 'bottomRight',
+                timeout: 3000,
+            });
+        },
+    });
+}
+function Block(){
+
 }

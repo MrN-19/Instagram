@@ -24,6 +24,6 @@ urlpatterns = [
     path("",include("post.urls",namespace="post")),
     path("direct/",include("direct.urls",namespace="direct")),
     path("new-messages",new_messages,name="newmessages"),
-
+    path("",include("account.urls",namespace="account"))
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
