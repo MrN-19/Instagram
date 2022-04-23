@@ -5,6 +5,7 @@
 }
 body{
     font-family: 'YekanBakh-Medium';
+    overscroll-behavior: contain;
 }
 /* Story Block */
 img{
