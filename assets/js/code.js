@@ -318,9 +318,9 @@ function FollowByPost() {
         url: "/request-action",
         type: "POST",
         data: {
-            "code": post_code_post_detail.value,
+            code: post_code_post_detail.value,
             csrfmiddlewaretoken: document.querySelector("input[name=csrfmiddlewaretoken]").value,
-            "type": "unfollow",
+            type: "unfollow",
         },
         success: function (res) {
             iziToast.success({
@@ -339,5 +339,29 @@ function FollowByPost() {
     });
 }
 function Block() {
-
+    let post_code_post_detail = document.getElementById("post_detail_post_code");
+    $.ajax({
+        url : "/block-user-post",
+        type : "POST",
+        data : {
+            "code" : post_code_post_detail.value,
+            csrfmiddlewaretoken: document.querySelector("input[name=csrfmiddlewaretoken]").value,
+        },
+        success : function(res)
+        {
+            iziToast.success({
+                message: res.text,
+                position: 'bottomRight',
+                timeout: 3000,
+            });
+        },
+        error : function(res)
+        {
+            iziToast.success({
+                message: res.text,
+                position: 'bottomRight',
+                timeout: 3000,
+            });
+        }
+    })
 }

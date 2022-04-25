@@ -56,7 +56,7 @@ def block_user_by_post(request):
             user_is_blocked = user_will_block,
         )
         return JsonResponse({
-            "status" : True,"message" : "Success 200","text" : "عملیات با موفقیت انجام شد"
+            "status" : True,"message" : "Success 200","text" : f"کاربر {user_will_block} مسدود شد"
         })
     return JsonResponse({
         "status" : False,"message" : "403 Bad Request","text" : "خطا در انجام عملیات"
