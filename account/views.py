@@ -4,7 +4,7 @@ from django.views.decorators.http import require_GET,require_http_methods,requir
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from post.models import Post
-from .models import FollowersFollowing
+from .models import FollowersFollowing,BlockUser
 from utilities.utilities import clean_text
 
 def action_follow_un_follow(post_code:str,follow_un_follow_type:str,user:User) -> tuple:
@@ -44,3 +44,20 @@ def follow_unfollow_user(request):
 
 
 
+@login_required(login_url="account:login")
+@require_POST
+def block_user_by_post(request):
+    post_code = request.POST.get("code")
+    post_code = clean_text(post_code)
+    if post_code:
+        user_will_block = Post.objects.filter(code = post_code).first().user
+        BlockUser.objects.create(
+            user_is_blocking = request.user,
+            user_is_blocked = user_will_block,
+        )
+        return JsonResponse({
+            "status" : True,"message" : "Success 200","text" : "عملیات با موفقیت انجام شد"
+        })
+    return JsonResponse({
+        "status" : False,"message" : "403 Bad Request","text" : "خطا در انجام عملیات"
+    },status = 403)
