@@ -37,6 +37,3 @@ def follow_unfollow_user(request):
     return JsonResponse({
         "status" : True,"message" : "403 Bad Request","text" : result[1]
     },status = 403)
-
-    
-
