@@ -281,6 +281,7 @@ function SetComment() {
 
 function PostDetail(code){
     let post_code_post_detail = document.getElementById("post_detail_post_code");
+    alert(code);
     post_code_post_detail.value = code;
 }
 
@@ -288,8 +289,13 @@ function UnFollowByPost(){
     let post_code_post_detail = document.getElementById("post_detail_post_code");
     alert(post_code_post_detail.value);
     $.ajax({
-        url : "/request-action?code=" + post_code_post_detail.value + "&type=unfollow",
-        type : "GET",
+        url : "/request-action",
+        type : "POST",
+        data : {
+            "code" : post_code_post_detail.value,
+            csrfmiddlewaretoken : document.querySelector("input[name=csrfmiddlewaretoken]").value,
+            "type" : "unfollow",
+        },
         success : function(res)
         {
             iziToast.success({
@@ -311,8 +317,8 @@ function FollowByPost()
 {
     let post_code_post_detail = document.getElementById("post_detail_post_code");
     $.ajax({
-        url : "/request-action?code=" + post_code_post_detail.code + "&type=follow",
-        type : "GET",
+        url : "/request-action?code=" + post_code_post_detail.value + "&type=follow",
+        type : "POST",
         success : function(res)
         {
             iziToast.success({
