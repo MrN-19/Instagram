@@ -29,11 +29,18 @@ def follow_unfollow_user(request):
     post_code = request.POST.get("code")
     post_code = clean_text(post_code)
     follow_un_follow_type = str(request.POST.get("type"))
-    result = action_follow_un_follow(post_code=post_code,follow_un_follow_type=follow_un_follow_type,user=request.user)
-    if result[0]:
+    if post_code and follow_un_follow_type:
+        result = action_follow_un_follow(post_code=post_code,follow_un_follow_type=follow_un_follow_type,user=request.user)
+        if result[0]:
+            return JsonResponse({
+                "status" : True,"message" : "Success 200","text" : result[1]
+            })
         return JsonResponse({
-            "status" : True,"message" : "Success 200","text" : result[1]
-        })
+            "status" : True,"message" : "403 Bad Request","text" : result[1]
+        },status = 403)
     return JsonResponse({
-        "status" : True,"message" : "403 Bad Request","text" : result[1]
+        "status" : False,"message" : "403 Bad Request","text" : "خطا در انجام عملیات"
     },status = 403)
+
+
+
