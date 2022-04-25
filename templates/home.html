@@ -197,10 +197,10 @@
         </div>
         <!-- End Story -->
         <!-- Post -->
-        <div class="posts border rounded-2 shadow-lg mt-2">
+        <div class="posts border rounded-2 shadow-lg mt-2 p-3 mb-4">
             {% csrf_token %}
             {% for i in posts %}
-            <div class="card w-100">
+            <div class="card w-100 my-4">
                 <div class="card-header" id="{{i.code}}">
                     <div class="row">
                         <div class="col-6 text-end py-1">
@@ -435,7 +435,7 @@
                 </span>
                 <br />
                 <br />
-                <span class="text-danger fw-bold cursor-pointer">
+                <span class="text-danger fw-bold cursor-pointer" onclick="Block()">
                     بلاک
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-angry" viewBox="0 0 16 16">
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>

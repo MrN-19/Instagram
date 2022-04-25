@@ -102,3 +102,14 @@ img{
     background: transparent;
 }
 /* End Posts */
+
+/* Direct */
+.user-image-direct{
+    border-radius: 50px !important;
+}
+.btn-send-message-direct{
+    width: 30px !important;
+    height: 30px !important;
+
+}
+/* End Direcr */
